@@ -1,5 +1,6 @@
 using DoBu_Martial_Arts_project.Data;
 using DoBu_Martial_Arts_project.Models;
+using DoBu_Martial_Arts_project.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

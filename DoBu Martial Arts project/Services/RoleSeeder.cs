@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace DoBu_Martial_Arts_project.Models
+namespace DoBu_Martial_Arts_project.Services
 {
     public class RoleSeeder
     {
@@ -11,7 +11,7 @@ namespace DoBu_Martial_Arts_project.Models
         {
             _roleManager = roleManager;
         }
-        public async Task SeedRoleAsync()
+        public async Task SeedRolesAsync()
         {
             string[] roles = { "Admin", "User" };
             foreach (var role in roles)

@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using DoBu_Martial_Arts_project.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoBu_Martial_Arts_project.Controllers
 {

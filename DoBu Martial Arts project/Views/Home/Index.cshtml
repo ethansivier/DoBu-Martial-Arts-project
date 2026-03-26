@@ -12,4 +12,20 @@
             </div>
       </div>
     </body>
+@if (User.Identity.IsAuthenticated)
+{
+    <a href="/Account/Logout">Logout</a>
+    <br />
+        @if (User.IsInRole("Admin"))
+        {
+        <a href="/Admin">Admin dashboard</a>
+    }
+}
+else
+{
+    <a href="/Account/Login">Login</a>
+    <a href="/Account/Register">Register</a>
+}
+
+
 </html>

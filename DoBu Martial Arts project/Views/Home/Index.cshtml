@@ -1,31 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Dictionary<string, string> infoCol = new Dictionary<string, string>()
+    {
+        {"Col1", "blabla"},
+        {"Col2", "blablablabla"},
+        {"Col3", "blablablablablabla"}
+    };
 }
 
 <html lang="en">
     <body>
-        <div class="card" style="width:200px">
-            <h4 class="card-title">title</h4>
-            <img class="card-img-top" src="https://www.w3schools.com/bootstrap5/img_avatar5.png">
-            <div class="card-body">
-                <p class="card-text">blablabla</p>
+        <div class="jumbotron text-center">
+            <h1>Dubo Martial Arts</h1>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                @foreach (var info in infoCol)
+                {
+                    <div class="col-sm-4">
+                        <h3 class="display-4">@info.Key</h3>
+                        <hr />
+                        <p>@info.Value</p>
+                    </div>
+                }
             </div>
-      </div>
+        </div>
+
+        
     </body>
-@if (User.Identity.IsAuthenticated)
-{
-    <a href="/Account/Logout">Logout</a>
-    <br />
-        @if (User.IsInRole("Admin"))
-        {
-        <a href="/Admin">Admin dashboard</a>
-    }
-}
-else
-{
-    <a href="/Account/Login">Login</a>
-    <a href="/Account/Register">Register</a>
-}
-
-
 </html>

@@ -12,5 +12,10 @@ namespace DobuMartial_project.Models
 
         [ForeignKey("Instructor")]
         public string InstructorID { get; set; }
+        public Instructor Instructor { get; set; }
+
+        [ForeignKey("Day")]
+        public string DayID { get; set; }
+        public Day Date { get; set; }
     }
 }

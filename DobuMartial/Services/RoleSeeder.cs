@@ -9,10 +9,10 @@ namespace DobuMartial_project.Services
 {
     public class RoleSeeder
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleSeeder(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public RoleSeeder(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -34,7 +34,7 @@ namespace DobuMartial_project.Services
 
             if (await _userManager.FindByEmailAsync(adminEmail) == null)
             {
-                var admin = new ApplicationUser
+                var admin = new User
                 {
                     UserName = adminEmail,
                     FullName = adminEmail,

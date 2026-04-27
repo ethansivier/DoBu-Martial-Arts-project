@@ -1,6 +1,17 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject UserManager<User> UserManager
+@inject DobuMartial_project.Data.ApplicationDbContext _context
+
+@{
     ViewData["Title"] = "Privacy Policy";
+
+    var user = await UserManager.GetUserAsync(User);
+    var dbUser = _context.Users.Find(user.Id);
+}
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p>Use this page to detail your site's privacy policy.
+    @dbUser.Membership.Name;
+</p>

@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+﻿using DobuMartial_project.Data;
 using DobuMartial_project.Models;
+using DobuMartial_project.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
+using System.Threading.Tasks;
 
 namespace DobuMartial_project.Controllers
 {
@@ -10,12 +13,17 @@ namespace DobuMartial_project.Controllers
 
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly DBInfoGrabber _dbGrabber;
+        private readonly ApplicationDbContext _context;
+
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, DBInfoGrabber dbGrabber, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _dbGrabber = dbGrabber;
+            _context = context;
         }
 
         [HttpGet]
@@ -23,13 +31,30 @@ namespace DobuMartial_project.Controllers
         {
             return View();
         }
+        public IActionResult ErrorRedirect(string error, string action, string controller, string fragment = "")
+        {
+            TempData["Error"] = error;
+            return RedirectToAction(action, controller, fragment);
+        }
+
+        public async Task<dynamic> GetUser()
+        {
+            User? idUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (idUser == null) { return ErrorRedirect("An error happened, try again", RouteData.Values["action"].ToString(), RouteData.Values["controller"].ToString()); }
+            User? dbUser = await _dbGrabber.GetDBUser(idUser);
+            if (dbUser == null) { return ErrorRedirect("An error happened, try again", RouteData.Values["action"].ToString(), RouteData.Values["controller"].ToString()); }
+
+            return dbUser;
+        }
+
+      
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUser regUser)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                var user = new User
                 {
                     UserName = regUser.Email,
                     Email = regUser.Email,
@@ -47,7 +72,7 @@ namespace DobuMartial_project.Controllers
                 {
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError("", error.Description);
+                        TempData["Error"] += error.Description ;
                     }
                 }
             }
@@ -71,15 +96,41 @@ namespace DobuMartial_project.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid login");
+                    return ErrorRedirect("Invalid Login", "Login", "Account");
                 }
             }
-            return View(loginUser);
+            return ErrorRedirect("Invalid Login", "Login", "Account");
         }
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");  
+        }
+
+        public async Task<IActionResult> ChosenSessions(User user)
+        { 
+            var result = await GetUser();
+            if (result is IActionResult)
+            {
+                return (IActionResult)result;
+            }
+            user = (User)result;
+            return View(user);
+        }
+
+        public async Task<IActionResult> RemoveSession(int sessionid)
+        {
+            var result = await GetUser();
+            if (result is IActionResult)
+            {
+                return (IActionResult)result;
+            }
+            User user = (User)result;
+            Session? dbSession = await _dbGrabber.GetDBSession(sessionid);
+            if (dbSession == null) { return ErrorRedirect("Could not find requested session. Please try again", "ChosenSessions", "Account"); }
+            user.Sessions.RemoveAll(s => s.SessionId == dbSession.SessionId);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ChosenSessions", "Account");
         }
     }
 }

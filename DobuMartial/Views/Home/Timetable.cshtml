@@ -1,8 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model TimetableModel
+
 <html data-bs-theme="light" lang="en">
 
 <head>
@@ -29,39 +26,67 @@
             </div>
         </div>
     </section>
+
     <div class="container py-4 py-xl-5">
         <div class="row" style="margin: 0px;">
             <div class="col">
-                <form><select class="form-select" name="Day" required="">
-                        <option value="1" selected="">Monday</option>
-                        <option value="2">Tuesday</option>
-                        <option value="3">Wednesday</option>
-                        <option value="4">Thursday</option>
-                        <option value="5">Friday</option>
-                        <option value="6">Saturday</option>
-                        <option value="7">Sunday</option>
-                    </select></form>
+                <form asp-action="Timetable" asp-controller="Home" method="get">
+                    <select class="form-select" onchange="this.form.submit()" asp-for="@Model.SelectedDayId" class="text-uppercase form-select" style="background: rgb(33,37,41);color: rgb(255,255,255);font-weight: bold;">
+                        @foreach (var day in Model.Days)
+                        {
+                            <option value="@day.DayID">@day.Name</option>
+                        }
+                    </select>
+                </form>
             </div>
         </div>
-        <form>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;">Details</th>
-                            <th style="text-align: center;">Class</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center;">Day<br>Time<br><button class="btn btn-primary" type="button">Book now</button></td>
-                            <td style="text-align: center;">class name<br>class instructor</td>
-                        </tr>
-                        <tr></tr>
-                    </tbody>
-                </table>
-            </div>
-        </form>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-uppercase text-center">Details</th>
+                        <th class="text-uppercase text-center">Class</th>
+                        <th class="text-uppercase text-center">Kids Class</th>
+                        <th class="text-uppercase text-center">Private Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model.Day.Sessions)
+                    {
+
+                        if (s.Class.Name != "")
+                        {
+                            <tr>
+                                <td class="text-center py-3">
+                                    <div class="fw-bold fs-5">@s.Day.Name</div>
+                                    <div class="text-muted mb-2">
+                                        @s.TimeFormatted()
+                                    </div>
+                                    <form asp-action="Book" asp-controller="Home" method="post">
+                                        <input type="hidden" name="sessionid" value="@s.SessionId" />
+                                        <input type="hidden" name="dayid" value="@s.DayID" />
+                                        <button class="btn btn-primary btn-sm" type="submit">Book now</button>
+                                    </form>
+
+                                </td>
+                                <td class="text-center py-3"><div class="fw-bold fs-5 text-primary">@s.Class.Name</div></td>
+                                <td class="text-center py-3">
+                                    <div class="badge bg-@(s.Class.IsKids ? "success" : "secondary") rounded-pill">
+                                        @(s.Class.IsKids ? "Yes" : "No")
+                                    </div>
+                                </td>
+                                <td class="text-center py-3">
+                                    <div class="badge bg-@(s.Class.IsPrivate ? "success" : "secondary") rounded-pill">
+                                        @(s.Class.IsPrivate ? "Yes" : "No")
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+            
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

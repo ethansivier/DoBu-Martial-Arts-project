@@ -11,12 +11,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configure Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<RoleSeeder>(); // Register Role Seeder
-
+builder.Services.AddScoped<DBInfoGrabber>();
 builder.Services.AddControllersWithViews(); // Enable MVC Views
 
 var app = builder.Build();

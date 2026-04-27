@@ -6,9 +6,11 @@ namespace DobuMartial_project.Models
 {
     public class LoginUser
     {
-        [Required(ErrorMessage ="Please enter enmail"), EmailAddress]
+        [Required(ErrorMessage ="Please enter email"), EmailAddress]
         public string Email{ get; set; }
-        [Required(ErrorMessage ="Pleaes enter password")]
+        [Required(ErrorMessage ="Please enter password")]
         public string Password { get; set; }
+
+        public string LoginError { get; set; } = "";
     }
 }

@@ -42,4 +42,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

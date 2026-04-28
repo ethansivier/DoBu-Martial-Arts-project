@@ -129,5 +129,7 @@ namespace DobuMartial_project.Data
         public DbSet<Day> WeekDays { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<User> Users { get; set; }
+        
     }
 }

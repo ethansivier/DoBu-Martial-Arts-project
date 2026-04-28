@@ -28,5 +28,12 @@ namespace DobuMartial_project.Services
                 .Include(s => s.Day)
                 .FirstOrDefaultAsync(s => s.SessionId == sessionID);
         }
+
+
+        public async Task<Membership?> GetDBMembership(int membershipID)
+        {
+            return await _context.Memberships
+                .FirstOrDefaultAsync(m => m.MembershipId == membershipID);
+        }
     }
 }

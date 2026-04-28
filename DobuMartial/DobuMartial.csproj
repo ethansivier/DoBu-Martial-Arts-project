@@ -9,8 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\css\admin.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\assets\bootstrap\css\bootstrap.min.css" />
     <None Include="wwwroot\assets\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\css\admin.css" />
     <None Include="wwwroot\assets\css\Features-Cards-icons.css" />
     <None Include="wwwroot\assets\css\Pricing-Centered-badges.css" />
     <None Include="wwwroot\assets\fonts\ionicons.eot" />

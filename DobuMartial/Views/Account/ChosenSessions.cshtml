@@ -42,7 +42,7 @@
                             {
                                 <tr>
                                     <td style="text-align: center;">@s.Day.Name<br>@s.TimeFormatted()<br>
-                                        <form asp-action="RemoveSession" asp-controller="Account" method="post">
+                                    <form asp-action="RemoveSession" asp-controller="Account" method="post">
                                         <input type="hidden" name="sessionid" value="@s.SessionId" />
                                         <button class="btn btn-primary btn-sm" type="submit">Remove</button>
                                     </form>

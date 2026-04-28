@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-DobuMartial_project-57966077-bd9c-4dd1-a518-33c581f9cdb3</UserSecretsId>
+    <RootNamespace>DobuMartial_project</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\assets\css\admin.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\bootstrap\css\bootstrap.min.css" />
+    <None Include="wwwroot\assets\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\css\admin.css" />
+    <None Include="wwwroot\assets\css\Features-Cards-icons.css" />
+    <None Include="wwwroot\assets\css\Pricing-Centered-badges.css" />
+    <None Include="wwwroot\assets\fonts\ionicons.eot" />
+    <None Include="wwwroot\assets\fonts\ionicons.min.css" />
+    <None Include="wwwroot\assets\fonts\ionicons.svg" />
+    <None Include="wwwroot\assets\fonts\ionicons.ttf" />
+    <None Include="wwwroot\assets\fonts\ionicons.woff" />
+    <None Include="wwwroot\assets\img\photo-1515025617920-e1e674b5033c.jpg" />
+    <None Include="wwwroot\assets\img\photo-1542937307-2d46ff7444a1.jpg" />
+    <None Include="wwwroot\assets\img\photo-1551103941-cbe0990b4386.jpg" />
+    <None Include="wwwroot\assets\img\morris.jpg" />
+    <None Include="wwwroot\assets\img\photo-1599677100568-a367e56ca161.jpg" />
+    <None Include="wwwroot\assets\img\photo-1602827115209-0f49346b36b2-1.jpg" />
+    <None Include="wwwroot\assets\img\photo-1602827115209-0f49346b36b2.jpg" />
+    <None Include="wwwroot\assets\img\mauricio.jpg" />
+    <None Include="wwwroot\assets\img\photo-1656653121526-a1458317b790.jpg" />
+    <None Include="wwwroot\assets\img\traci.jpg" />
+    <None Include="wwwroot\assets\img\guy.jpg" />
+    <None Include="wwwroot\assets\img\harpeet.jpg" />
+    <None Include="wwwroot\assets\img\sarah.jpg" />
+    <None Include="wwwroot\assets\img\photo-1770386717413-78b2d8c33442.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
+</Project>

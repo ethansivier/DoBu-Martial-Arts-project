@@ -1,0 +1,86 @@
+﻿@model DashboardModel
+
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/Features-Cards-icons.css">
+    <link rel="stylesheet" href="assets/css/Pricing-Centered-badges.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-lg-2 bg-primary d-md-block sidebar collapse" id="sidebar">
+            <partial name="_AdminPartial" />
+            <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4 main-content">
+                <div class="d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap pt-3 mb-3 pb-2 border-bottom">
+                    <h1 class="h2">Dashboard Statistics</h1>
+                </div>
+                <div class="row mb-4 g-4">
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-white bg-primary rounded flex-shrink-0 p-3">
+                                        <svg class="bi bi-people-fill fs-3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h6 class="text-muted mb-1 card-subtitle">Total Users</h6>
+                                        <h4 class="mb-0 card-title">@Model.UserCount.ToString()</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-white bg-success rounded flex-shrink-0 p-3">
+                                        <svg class="bi bi-calendar-check fs-3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"></path>
+                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h6 class="text-muted mb-1 card-subtitle">Sessions Booked</h6>
+                                        <h4 class="mb-0 card-title">@Model.SessionCount.ToString()</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="mb-3 h4">Membership Breakdown</h3>
+                <div class="row g-4">
+                    @foreach ((string, int)MemInfo in Model.MembershipCount)
+                    {
+                        <div class="col-md-4">
+                            <div class="card border-primary border-0 shadow-sm border-start border-4">
+                                <div class="card-body">
+                                    <h6 class="text-muted">@MemInfo.Item1 Plan</h6>
+                                    <h2 class="fw-bold">@MemInfo.Item2.ToString()</h2>
+                                    <p class="text-muted mb-0">Active Members</p>
+                                </div>
+                            </div>
+                        </div> 
+                    }
+                   
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

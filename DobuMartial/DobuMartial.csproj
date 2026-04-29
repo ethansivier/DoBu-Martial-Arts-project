@@ -15,9 +15,9 @@
   <ItemGroup>
     <None Include="wwwroot\assets\bootstrap\css\bootstrap.min.css" />
     <None Include="wwwroot\assets\bootstrap\js\bootstrap.min.js" />
-    <None Include="wwwroot\assets\css\admin.css" />
-    <None Include="wwwroot\assets\css\Features-Cards-icons.css" />
-    <None Include="wwwroot\assets\css\Pricing-Centered-badges.css" />
+    <None Include="wwwroot\css\admin.css" />
+    <None Include="wwwroot\css\Features-Cards-icons.css" />
+    <None Include="wwwroot\css\Pricing-Centered-badges.css" />
     <None Include="wwwroot\assets\fonts\ionicons.eot" />
     <None Include="wwwroot\assets\fonts\ionicons.min.css" />
     <None Include="wwwroot\assets\fonts\ionicons.svg" />
@@ -45,11 +45,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.12" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\assets\css\" />
   </ItemGroup>
 
 </Project>

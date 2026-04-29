@@ -57,4 +57,26 @@ public class AdminController : Controller
         dashboardModel.SessionCount = totalSessions;
         return View(dashboardModel);
     }
+
+    public async Task<IActionResult> UserList(List<User> UserList)
+    {
+        UserList = [];
+        foreach (User idUser in _context.Users)
+        {
+            User? dbUser = await _dbGrabber.GetDBUser(idUser);
+            if (dbUser == null) { continue; }
+            UserList.Add(dbUser);
+        }
+        return View(UserList);
+    }
+
+    public async Task<IActionResult> UserEdit(EditUserModel editUserModel)
+    {
+        if (editUserModel.Email != "")
+        {
+            User? idUser = _context.Users.FirstOrDefault(u => u.Email == editUserModel.Email);
+           // User? user = await _dbGrabber.GetDBUser();
+        }
+        return View(editUserModel);
+    }
 }

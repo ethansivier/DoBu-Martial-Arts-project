@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DobuMartial_project.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="~/css/admin.css" />
 </head>
 <body>
     <header>
@@ -37,10 +40,12 @@
                           
                         }
                     </ul>
+                  
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
+      
         @if (TempData["Error"] != null)
         {
             <div class="fixed-top" style="top:56px">
@@ -62,17 +67,33 @@
         }
 
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - DobuMartial_project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    @if (ViewContext?.RouteData?.Values?["controller"]?.ToString() == "Admin")
+    { 
+        <div class="container-fluid">
+            <div class="row">
+                <partial name="_AdminPartial" />
+                <main class="col-md-9 col-lg-10 ms-sm-auto px-md-4">
+                    @RenderBody()
+                </main>
+            </div>
         </div>
-    </footer>
+    }
+    else
+    {
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2026 - DobuMartial_project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    }
+   
+
+  
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

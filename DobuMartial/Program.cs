@@ -26,6 +26,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();
 
+
 // Seed roles when the application starts
 using (var scope = app.Services.CreateScope())
 {

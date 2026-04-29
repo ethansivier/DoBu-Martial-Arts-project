@@ -14,7 +14,7 @@ namespace DobuMartial_project.Services
         }
         public async Task<User?> GetDBUser(User user)
         {
-            return await _context.Users
+            return await _context.Users               
                 .Include(u => u.Membership)
                 .Include(u => u.Sessions).ThenInclude(s => s.Day).Include(u => u.Sessions).ThenInclude(s => s.Class)
                 .Include(u => u.ChosenMartialArts)

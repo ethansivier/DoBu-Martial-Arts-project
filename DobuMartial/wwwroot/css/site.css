@@ -17,6 +17,10 @@ html {
   min-height: 100%;
 }
 
+footer {
+    height:3px;
+}
+
 body {
   margin-bottom: 60px;
   padding-top:60px;

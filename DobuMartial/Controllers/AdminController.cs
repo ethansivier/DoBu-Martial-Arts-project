@@ -4,6 +4,7 @@ using DobuMartial_project.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 [Authorize(Roles = "Admin")]
@@ -19,6 +20,13 @@ public class AdminController : Controller
         _dbGrabber = dbGrabber;
         _context = context;
     }
+
+    public IActionResult ErrorRedirect(string error, string action, string controller, string fragment = "")
+    {
+        TempData["Error"] = error;
+        return RedirectToAction(action, controller, fragment);
+    }
+
     public async Task<IActionResult> Index(DashboardModel dashboardModel)
     {
         List<(string, int)> memCount = [];
@@ -70,13 +78,48 @@ public class AdminController : Controller
         return View(UserList);
     }
 
-    public async Task<IActionResult> UserEdit(EditUserModel editUserModel)
+    [HttpGet]
+    public async Task<IActionResult> UserEdit(EditUserModel editUserModel, string userid)
     {
-        if (editUserModel.Email != "")
-        {
-            User? idUser = _context.Users.FirstOrDefault(u => u.Email == editUserModel.Email);
-           // User? user = await _dbGrabber.GetDBUser();
-        }
+        User? idUser = await _userManager.FindByIdAsync(userid);
+        if (idUser == null) { return ErrorRedirect($"Could not find user for id {userid}", "Admin", "Index"); }
+        User? dbUser = await _dbGrabber.GetDBUser(idUser);
+        if (dbUser == null) { return ErrorRedirect($"Could not find user for id {userid}", "Admin", "Index"); }
+        
+        editUserModel.User = dbUser;
+        editUserModel.newUsername = dbUser.UserName;
+        editUserModel.Memberships = _context.Memberships.ToList();
+        editUserModel.newSessions = dbUser.Sessions.ToList();
+        editUserModel.newMembershipId = dbUser.Membership?.MembershipId;
+        
+      
+
         return View(editUserModel);
     }
+    [HttpPost]
+    public async Task<IActionResult> UserEdit(EditUserModel editUserModel)
+    {
+        var selectedSessions = editUserModel.newSessions.Where(s => s.Selected == false).ToList();
+        var sessions = _context.Sessions.Where(s => selectedSessions.Contains(s));
+        User? idUser = await _userManager.FindByIdAsync(editUserModel.UserId);
+
+        User? dbUser = await _dbGrabber.GetDBUser(idUser);
+        if (dbUser == null) { TempData["Error"] = "FAILED TO FIND USER";  return View(); }
+        dbUser.Sessions.Clear();
+        dbUser.Sessions.AddRange(sessions);
+        await _context.SaveChangesAsync();
+        return View(editUserModel);
+    }
+
+    public async Task<IActionResult> UserDelete(string userid)
+    {
+        User? idUser = await _userManager.FindByIdAsync(userid);
+
+        User? dbUser = await _dbGrabber.GetDBUser(idUser);
+        if (dbUser == null) { return ErrorRedirect("COULD NOT FIND USER.", "UserList", "Admin"); }
+        _context.Remove(dbUser);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("UserList");
+    }
+
 }

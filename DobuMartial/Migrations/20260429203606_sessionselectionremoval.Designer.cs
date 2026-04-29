@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DobuMartial_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260427144850_juniorMembership")]
-    partial class juniorMembership
+    [Migration("20260429203606_sessionselectionremoval")]
+    partial class sessionselectionremoval
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -323,7 +323,7 @@ namespace DobuMartial_project.Migrations
                         new
                         {
                             MembershipId = 5,
-                            IsKids = false,
+                            IsKids = true,
                             MartialArts = 100,
                             Name = "Junior Membership",
                             Price = 25.0,
@@ -774,7 +774,6 @@ namespace DobuMartial_project.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")

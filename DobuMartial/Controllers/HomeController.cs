@@ -99,10 +99,7 @@ namespace DobuMartial_project.Controllers
             List<string> InvalidClasses = ["Private Tuition"]; //invaliud classes for checking booking
 
             RedirectToActionResult? EndRedirect = RedirectToAction("Timetable", "Home", new { SelectedDayId = dayid });
-            if (idUser == null)
-            {
-                return ErrorRedirect("Please sign in before attemping to select classes.", "Register", "Account");
-            }
+            if (idUser == null) { return ErrorRedirect("Please sign in before attemping to select classes.", "Register", "Account");  }
             Session? dbSession = await _dbGrabber.GetDBSession(sessionid);
             User? dbUser =  await _dbGrabber.GetDBUser(idUser);
             
@@ -157,6 +154,7 @@ namespace DobuMartial_project.Controllers
 
             TempData["Success"] = $"Successfully added {dbSession?.Class.Name} on {dbSession?.Day.Name.ToString()} at {dbSession?.TimeStart.ToString()} to your booking ";
             dbUser.Sessions.Add(dbSession);
+
             await _context.SaveChangesAsync();
             
             return EndRedirect;

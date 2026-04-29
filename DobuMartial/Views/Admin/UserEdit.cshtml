@@ -1,33 +1,59 @@
 ﻿@model EditUserModel;
 
+@{
+    if (Model.User == null) { return; }
+
+    Model.newSessions = Model.User.Sessions;
+    Model.newUsername = Model.User.UserName;
+    Model.newMembershipId = Model.User.Membership.MembershipId;
+}
 
 
-@if (Model.User != null)
+@if (Model != null)
 {
     <div class="card border-0 shadow-sm">
         <div class="card-body">
             <h5 class="mb-4 card-title">Account Information</h5>
-            <form asp-action="ChangeUser" asp-controller="Admin">
+            <form asp-action="UserEdit" asp-controller="Admin" method="post">
+                <input type="hidden" asp-for="@Model.UserId" value="@Model.User.Id"/>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Username</label><input class="form-control" type="text" placeholder="@Model.User.FullName">
+                        <label class="form-label">Username</label>
+                        <input class="form-control" asp-for="@Model.newUsername" value="@Model.newUsername" type="text" placeholder="@Model.User.UserName">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">New Password</label><input class="form-control" type="password" placeholder="Leave blank to keep current">
+                        <label class="form-label">New Password</label>
+                        <input class="form-control" asp-for="@Model.newPassword" value="@Model.newPassword" name="@Model.newPassword" type="password" placeholder="Leave blank to keep current">
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label d-block">Membership Level</label>
-                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="planBasic" name="membership" value="basic"><label class="form-check-label" for="planBasic">Basic</label></div>
-                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" checked="" id="planPro" name="membership" value="pro"><label class="form-check-label" for="planPro">Pro</label></div>
-                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="planPremium" name="membership" value="premium"><label class="form-check-label" for="planPremium">Premium</label></div>
+                    @foreach (Membership m in Model.Memberships)
+                    {
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="@m.MembershipId.ToString()" asp-for="@Model.newMembershipId" value="@m.MembershipId">
+                            <label class="form-check-label" for="@m.MembershipId.ToString()">@m.Name</label>
+                        </div>
+                    }
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Enrolled Sessions</label>
+                    <label class="form-label">Select which to remove.</label>
+
                     <div class="row g-2">
-                        <div class="col-sm-4">
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="session5"><label class="form-check-label" for="session5">a</label></div>
-                        </div>
+                        @for (int i = 0; i < Model.newSessions.Count; i++)
+                        {
+                            <div class="col-sm-4">
+                                <div class="form-check">
+                                    <input type="hidden" asp-for="newSessions[i].SessionId" />
+
+                                    <input class="form-check-input" asp-for="newSessions[i].Selected" />
+                                    <label class="form-check-label" >
+                                        @($"{Model.newSessions[i].Class.Name} on {Model.newSessions[i].Day}")
+                                    </label>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">

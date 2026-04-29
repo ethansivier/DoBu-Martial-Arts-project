@@ -7,6 +7,7 @@ namespace DobuMartial_project.Models
         public int? SessionId { get; set; }
         public TimeOnly TimeStart { get; set; }
         public TimeOnly TimeEnd { get; set; }
+        public bool Selected { get; set; } // used for admin page
 
         [ForeignKey("DayID")]
         public int DayID { get; set; }

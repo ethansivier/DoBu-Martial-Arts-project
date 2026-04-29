@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DobuMartial_project.Migrations
 {
     /// <inheritdoc />
-    public partial class classesIncrementOneAttemptTwo : Migration
+    public partial class sessionselectionremoval : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -98,7 +98,7 @@ namespace DobuMartial_project.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MembershipId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -321,7 +321,8 @@ namespace DobuMartial_project.Migrations
                     { 1, false, 1, "Basic", 25.0, 2 },
                     { 2, false, 1, "Intermediate", 35.0, 3 },
                     { 3, false, 2, "Advanced", 45.0, 5 },
-                    { 4, false, 100, "Elite", 60.0, 100 }
+                    { 4, false, 100, "Elite", 60.0, 100 },
+                    { 5, true, 100, "Junior Membership", 25.0, 100 }
                 });
 
             migrationBuilder.InsertData(

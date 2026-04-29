@@ -342,6 +342,9 @@ namespace DobuMartial_project.Migrations
                     b.Property<int>("DayID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Selected")
+                        .HasColumnType("bit");
+
                     b.Property<TimeOnly>("TimeEnd")
                         .HasColumnType("time");
 
@@ -362,6 +365,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 1,
                             ClassId = 1,
                             DayID = 1,
+                            Selected = false,
                             TimeEnd = new TimeOnly(7, 30, 0),
                             TimeStart = new TimeOnly(6, 30, 0)
                         },
@@ -370,6 +374,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 2,
                             ClassId = 2,
                             DayID = 1,
+                            Selected = false,
                             TimeEnd = new TimeOnly(10, 0, 0),
                             TimeStart = new TimeOnly(8, 0, 0)
                         },
@@ -378,6 +383,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 3,
                             ClassId = 3,
                             DayID = 1,
+                            Selected = false,
                             TimeEnd = new TimeOnly(12, 0, 0),
                             TimeStart = new TimeOnly(10, 30, 0)
                         },
@@ -386,6 +392,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 4,
                             ClassId = 4,
                             DayID = 1,
+                            Selected = false,
                             TimeEnd = new TimeOnly(14, 30, 0),
                             TimeStart = new TimeOnly(13, 0, 0)
                         },
@@ -394,6 +401,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 5,
                             ClassId = 5,
                             DayID = 1,
+                            Selected = false,
                             TimeEnd = new TimeOnly(17, 0, 0),
                             TimeStart = new TimeOnly(15, 0, 0)
                         },
@@ -402,6 +410,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 6,
                             ClassId = 6,
                             DayID = 1,
+                            Selected = false,
                             TimeEnd = new TimeOnly(19, 0, 0),
                             TimeStart = new TimeOnly(17, 30, 0)
                         },
@@ -410,6 +419,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 7,
                             ClassId = 7,
                             DayID = 1,
+                            Selected = false,
                             TimeEnd = new TimeOnly(21, 0, 0),
                             TimeStart = new TimeOnly(19, 0, 0)
                         },
@@ -418,6 +428,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 8,
                             ClassId = 6,
                             DayID = 2,
+                            Selected = false,
                             TimeEnd = new TimeOnly(7, 30, 0),
                             TimeStart = new TimeOnly(6, 30, 0)
                         },
@@ -426,6 +437,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 9,
                             ClassId = 3,
                             DayID = 2,
+                            Selected = false,
                             TimeEnd = new TimeOnly(10, 0, 0),
                             TimeStart = new TimeOnly(8, 0, 0)
                         },
@@ -434,6 +446,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 10,
                             ClassId = 3,
                             DayID = 2,
+                            Selected = false,
                             TimeEnd = new TimeOnly(12, 0, 0),
                             TimeStart = new TimeOnly(10, 30, 0)
                         },
@@ -442,6 +455,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 11,
                             ClassId = 4,
                             DayID = 2,
+                            Selected = false,
                             TimeEnd = new TimeOnly(14, 30, 0),
                             TimeStart = new TimeOnly(13, 0, 0)
                         },
@@ -450,6 +464,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 12,
                             ClassId = 8,
                             DayID = 2,
+                            Selected = false,
                             TimeEnd = new TimeOnly(17, 0, 0),
                             TimeStart = new TimeOnly(15, 0, 0)
                         },
@@ -458,6 +473,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 13,
                             ClassId = 2,
                             DayID = 2,
+                            Selected = false,
                             TimeEnd = new TimeOnly(19, 0, 0),
                             TimeStart = new TimeOnly(17, 30, 0)
                         },
@@ -466,6 +482,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 14,
                             ClassId = 7,
                             DayID = 2,
+                            Selected = false,
                             TimeEnd = new TimeOnly(21, 0, 0),
                             TimeStart = new TimeOnly(19, 0, 0)
                         },
@@ -474,6 +491,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 15,
                             ClassId = 7,
                             DayID = 3,
+                            Selected = false,
                             TimeEnd = new TimeOnly(7, 30, 0),
                             TimeStart = new TimeOnly(6, 30, 0)
                         },
@@ -482,6 +500,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 16,
                             ClassId = 3,
                             DayID = 3,
+                            Selected = false,
                             TimeEnd = new TimeOnly(10, 0, 0),
                             TimeStart = new TimeOnly(8, 0, 0)
                         },
@@ -490,6 +509,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 17,
                             ClassId = 3,
                             DayID = 3,
+                            Selected = false,
                             TimeEnd = new TimeOnly(12, 0, 0),
                             TimeStart = new TimeOnly(10, 30, 0)
                         },
@@ -498,6 +518,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 18,
                             ClassId = 4,
                             DayID = 3,
+                            Selected = false,
                             TimeEnd = new TimeOnly(14, 30, 0),
                             TimeStart = new TimeOnly(13, 0, 0)
                         },
@@ -506,6 +527,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 19,
                             ClassId = 10,
                             DayID = 3,
+                            Selected = false,
                             TimeEnd = new TimeOnly(17, 0, 0),
                             TimeStart = new TimeOnly(15, 0, 0)
                         },
@@ -514,6 +536,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 20,
                             ClassId = 7,
                             DayID = 3,
+                            Selected = false,
                             TimeEnd = new TimeOnly(19, 0, 0),
                             TimeStart = new TimeOnly(17, 30, 0)
                         },
@@ -522,6 +545,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 21,
                             ClassId = 1,
                             DayID = 3,
+                            Selected = false,
                             TimeEnd = new TimeOnly(21, 0, 0),
                             TimeStart = new TimeOnly(19, 0, 0)
                         },
@@ -530,6 +554,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 22,
                             ClassId = 1,
                             DayID = 4,
+                            Selected = false,
                             TimeEnd = new TimeOnly(7, 30, 0),
                             TimeStart = new TimeOnly(6, 30, 0)
                         },
@@ -538,6 +563,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 23,
                             ClassId = 3,
                             DayID = 4,
+                            Selected = false,
                             TimeEnd = new TimeOnly(10, 0, 0),
                             TimeStart = new TimeOnly(8, 0, 0)
                         },
@@ -546,6 +572,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 24,
                             ClassId = 3,
                             DayID = 4,
+                            Selected = false,
                             TimeEnd = new TimeOnly(12, 0, 0),
                             TimeStart = new TimeOnly(10, 30, 0)
                         },
@@ -554,6 +581,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 25,
                             ClassId = 4,
                             DayID = 4,
+                            Selected = false,
                             TimeEnd = new TimeOnly(14, 30, 0),
                             TimeStart = new TimeOnly(13, 0, 0)
                         },
@@ -562,6 +590,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 26,
                             ClassId = 9,
                             DayID = 4,
+                            Selected = false,
                             TimeEnd = new TimeOnly(17, 0, 0),
                             TimeStart = new TimeOnly(15, 0, 0)
                         },
@@ -570,6 +599,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 27,
                             ClassId = 1,
                             DayID = 4,
+                            Selected = false,
                             TimeEnd = new TimeOnly(19, 0, 0),
                             TimeStart = new TimeOnly(17, 30, 0)
                         },
@@ -578,6 +608,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 28,
                             ClassId = 6,
                             DayID = 4,
+                            Selected = false,
                             TimeEnd = new TimeOnly(21, 0, 0),
                             TimeStart = new TimeOnly(19, 0, 0)
                         },
@@ -586,6 +617,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 29,
                             ClassId = 2,
                             DayID = 5,
+                            Selected = false,
                             TimeEnd = new TimeOnly(7, 30, 0),
                             TimeStart = new TimeOnly(6, 30, 0)
                         },
@@ -594,6 +626,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 30,
                             ClassId = 1,
                             DayID = 5,
+                            Selected = false,
                             TimeEnd = new TimeOnly(10, 0, 0),
                             TimeStart = new TimeOnly(8, 0, 0)
                         },
@@ -602,6 +635,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 31,
                             ClassId = 3,
                             DayID = 5,
+                            Selected = false,
                             TimeEnd = new TimeOnly(12, 0, 0),
                             TimeStart = new TimeOnly(10, 30, 0)
                         },
@@ -610,6 +644,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 32,
                             ClassId = 4,
                             DayID = 5,
+                            Selected = false,
                             TimeEnd = new TimeOnly(14, 30, 0),
                             TimeStart = new TimeOnly(13, 0, 0)
                         },
@@ -618,6 +653,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 33,
                             ClassId = 8,
                             DayID = 5,
+                            Selected = false,
                             TimeEnd = new TimeOnly(17, 0, 0),
                             TimeStart = new TimeOnly(15, 0, 0)
                         },
@@ -626,6 +662,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 34,
                             ClassId = 2,
                             DayID = 5,
+                            Selected = false,
                             TimeEnd = new TimeOnly(19, 0, 0),
                             TimeStart = new TimeOnly(17, 30, 0)
                         },
@@ -634,6 +671,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 35,
                             ClassId = 3,
                             DayID = 5,
+                            Selected = false,
                             TimeEnd = new TimeOnly(21, 0, 0),
                             TimeStart = new TimeOnly(19, 0, 0)
                         },
@@ -642,6 +680,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 36,
                             ClassId = 11,
                             DayID = 6,
+                            Selected = false,
                             TimeEnd = new TimeOnly(7, 30, 0),
                             TimeStart = new TimeOnly(6, 30, 0)
                         },
@@ -650,6 +689,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 37,
                             ClassId = 3,
                             DayID = 6,
+                            Selected = false,
                             TimeEnd = new TimeOnly(10, 0, 0),
                             TimeStart = new TimeOnly(8, 0, 0)
                         },
@@ -658,6 +698,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 38,
                             ClassId = 7,
                             DayID = 6,
+                            Selected = false,
                             TimeEnd = new TimeOnly(12, 0, 0),
                             TimeStart = new TimeOnly(10, 30, 0)
                         },
@@ -666,6 +707,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 39,
                             ClassId = 6,
                             DayID = 6,
+                            Selected = false,
                             TimeEnd = new TimeOnly(14, 30, 0),
                             TimeStart = new TimeOnly(13, 0, 0)
                         },
@@ -674,6 +716,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 40,
                             ClassId = 2,
                             DayID = 6,
+                            Selected = false,
                             TimeEnd = new TimeOnly(17, 0, 0),
                             TimeStart = new TimeOnly(15, 0, 0)
                         },
@@ -682,6 +725,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 41,
                             ClassId = 11,
                             DayID = 6,
+                            Selected = false,
                             TimeEnd = new TimeOnly(19, 0, 0),
                             TimeStart = new TimeOnly(17, 30, 0)
                         },
@@ -690,6 +734,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 42,
                             ClassId = 11,
                             DayID = 6,
+                            Selected = false,
                             TimeEnd = new TimeOnly(21, 0, 0),
                             TimeStart = new TimeOnly(19, 0, 0)
                         },
@@ -698,6 +743,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 43,
                             ClassId = 11,
                             DayID = 7,
+                            Selected = false,
                             TimeEnd = new TimeOnly(7, 30, 0),
                             TimeStart = new TimeOnly(6, 30, 0)
                         },
@@ -706,6 +752,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 44,
                             ClassId = 3,
                             DayID = 7,
+                            Selected = false,
                             TimeEnd = new TimeOnly(10, 0, 0),
                             TimeStart = new TimeOnly(8, 0, 0)
                         },
@@ -714,6 +761,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 45,
                             ClassId = 6,
                             DayID = 7,
+                            Selected = false,
                             TimeEnd = new TimeOnly(12, 0, 0),
                             TimeStart = new TimeOnly(10, 30, 0)
                         },
@@ -722,6 +770,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 46,
                             ClassId = 7,
                             DayID = 7,
+                            Selected = false,
                             TimeEnd = new TimeOnly(14, 30, 0),
                             TimeStart = new TimeOnly(13, 0, 0)
                         },
@@ -730,6 +779,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 47,
                             ClassId = 1,
                             DayID = 7,
+                            Selected = false,
                             TimeEnd = new TimeOnly(17, 0, 0),
                             TimeStart = new TimeOnly(15, 0, 0)
                         },
@@ -738,6 +788,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 48,
                             ClassId = 11,
                             DayID = 7,
+                            Selected = false,
                             TimeEnd = new TimeOnly(19, 0, 0),
                             TimeStart = new TimeOnly(17, 30, 0)
                         },
@@ -746,6 +797,7 @@ namespace DobuMartial_project.Migrations
                             SessionId = 49,
                             ClassId = 11,
                             DayID = 7,
+                            Selected = false,
                             TimeEnd = new TimeOnly(21, 0, 0),
                             TimeStart = new TimeOnly(19, 0, 0)
                         });
@@ -771,7 +823,6 @@ namespace DobuMartial_project.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")

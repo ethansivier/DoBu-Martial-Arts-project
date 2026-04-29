@@ -23,7 +23,7 @@ namespace DobuMartial_project.Services
 
         public async Task<Session?> GetDBSession(int sessionID)
         {
-            return await _context.Sessions
+            return await _context.Sessions    
                 .Include(s => s.Class)
                 .Include(s => s.Day)
                 .FirstOrDefaultAsync(s => s.SessionId == sessionID);

@@ -1,0 +1,77 @@
+﻿@model EditMembershipModel
+@{
+    var c = Model.ChosenMembership;
+}
+<div class="d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap pt-3 mb-3 pb-2 border-bottom">
+    <h1 class="h2">Edit Membership Plans</h1>
+</div>
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="mb-3 card-title">Select Plan to Edit</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="MembershipEdit" asp-asp-controller="Admin">
+                    <select class="form-select" asp-for="@Model.ChosenMembershipID" onchange="this.form.submit()">
+                        <option value="" selected="">Choose a plan...</option>
+                        @foreach (var m in Model.Memberships)
+                        {
+                            <option value="@m.MembershipId">@m.Name</option>
+                        }
+                    </select>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.ChosenMembership != null)
+{
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <h5 class="mb-4 card-title">Plan Details</h5>
+            <form id="updateForm" asp-action="MembershipEdit" asp-controller="Admin">
+                <input type="hidden" asp-for="@Model.ChosenMembershipID" value="@Model.ChosenMembershipID" />
+                <input type="hidden" asp-for="@Model.update" value="True" />
+                <div class="row mb-3 g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Plan Name</label>
+                        <input class="form-control" type="text" asp-for="@Model.newName" value="@c.Name"  placeholder="@c.Name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Price ($)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input class="form-control" type="number" asp-for="@Model.newPrice" value="@c.Price" placeholder="@c.Price" step="0.01">
+                          </div>
+                    </div>
+                </div>
+                <div class="row mb-3 g-3">
+                    <div class="col-md-6">
+                        <label class="form-label" asp-for="@Model.newMartialArts">Martial Arts Classes Count</label>
+                        <input class="form-control" asp-for="@Model.newMartialArts" value="@c.MartialArts" type="number" id="martialArtsCount" placeholder="Number of classes included">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" asp-for="@Model.newSessions">General Sessions Count</label>
+                        <input class="form-control" asp-for="@Model.newSessions" value="@c.Sessions" type="number" id="sessionsCount" placeholder="Number of sessions included">
+                    </div>
+                </div>
+                <div class="mt-4 mb-4">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="isKidsPlan" asp-for="@Model.newIsKids">
+                        <label class="form-check-label" for="isKidsPlan" asp-for="@Model.newIsKids">This is for Kids</label>
+                        <div class="form-text"><span>Enable this if the plan is intended for children.</span></div>
+                    </div>
+                </div>
+            </form>
+            <form id="removeForm" asp-action="MembershipRemove" asp-controller="Admin">
+                <input type="hidden" asp-for="@Model.ChosenMembershipID" value="@Model.ChosenMembershipID"/>
+            </form>
+
+            <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                <button class="btn btn-outline-danger" type="submit" form="removeForm">Remove Plan</button>
+                <button class="btn btn-outline-secondary" type="reset" form="updateForm">Discard Changes</button>
+                <button class="btn btn-primary px-4" type="submit" form="updateForm">Update Plan</button>
+            </div>
+        </div>
+    </div>
+}

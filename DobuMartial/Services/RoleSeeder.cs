@@ -56,6 +56,23 @@ namespace DobuMartial_project.Services
                     }
                 }
             }
+            for (int i = 1; i <= 10; i++)
+            {
+                var email = $"user{i}@test.com";
+
+                if (await _userManager.FindByEmailAsync(email) == null)
+                {
+                    var user = new User
+                    {
+                        UserName = email,
+                        Email = email,
+                        EmailConfirmed = true
+                    };
+
+                    await _userManager.CreateAsync(user, "User123!");
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
+            }
         }
     }
 }

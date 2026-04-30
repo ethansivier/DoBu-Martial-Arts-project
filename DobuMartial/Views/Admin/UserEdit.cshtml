@@ -5,7 +5,11 @@
 
     Model.newSessions = Model.User.Sessions;
     Model.newUsername = Model.User.UserName;
-    Model.newMembershipId = Model.User.Membership.MembershipId;
+    if (Model.User.Membership != null)
+    {
+        Model.newMembershipId = Model.User.Membership.MembershipId;
+
+    }
 }
 
 

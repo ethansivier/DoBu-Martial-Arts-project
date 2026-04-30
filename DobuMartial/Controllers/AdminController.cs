@@ -101,14 +101,28 @@ public class AdminController : Controller
     {
         var selectedSessions = editUserModel.newSessions.Where(s => s.Selected == false).ToList();
         var sessions = _context.Sessions.Where(s => selectedSessions.Contains(s));
-        User? idUser = await _userManager.FindByIdAsync(editUserModel.UserId);
+        User ? idUser = await _userManager.FindByIdAsync(editUserModel.UserId);
+        if (idUser == null) { TempData["Error"] = "FAILED TO FIND USER"; return View(); }
 
         User? dbUser = await _dbGrabber.GetDBUser(idUser);
-        if (dbUser == null) { TempData["Error"] = "FAILED TO FIND USER";  return View(); }
+        if (dbUser == null) { TempData["Error"] = "FAILED TO FIND USER"; return View(); }
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(idUser);
+        await _userManager.ResetPasswordAsync(idUser, token, editUserModel.newPassword);
+
+        if (editUserModel.newMembershipId != null)
+        {
+            Membership membership = (Membership)_context.Memberships.First(m => m.MembershipId == editUserModel.newMembershipId);
+            dbUser.Membership = membership;
+        }
+
         dbUser.Sessions.Clear();
         dbUser.Sessions.AddRange(sessions);
+        dbUser.UserName = editUserModel.newUsername;
+        
+
         await _context.SaveChangesAsync();
-        return View(editUserModel);
+        return RedirectToAction("UserList");
     }
 
     public async Task<IActionResult> UserDelete(string userid)
@@ -122,4 +136,74 @@ public class AdminController : Controller
         return RedirectToAction("UserList");
     }
 
+
+    public async Task<IActionResult> MembershipEdit(EditMembershipModel model)
+    {
+        
+        if (model.Memberships == null)
+        {
+            model.Memberships = _dbGrabber.GetAllDBMemberships();
+        }
+        if (model.ChosenMembershipID != null)
+        {
+            Membership m = await _dbGrabber.GetDBMembership((int)model.ChosenMembershipID);
+            if (m != null)
+            {
+                model.ChosenMembership = m;
+                if (model.update)
+                {
+                    m.Price = model.newPrice;
+                    m.Name = model.newName;
+                    m.Sessions = model.newSessions;
+                    m.IsKids = model.newIsKids;
+                    m.MartialArts = model.newMartialArts;
+                    await _context.SaveChangesAsync(); 
+                }
+                else
+                {
+                    model.newIsKids = m.IsKids;
+                }
+            }
+           
+        }
+        return View(model);
+    }
+
+    public async Task<IActionResult> MembershipCreate(EditMembershipModel model)
+    {
+        if (model.update == true)
+        {
+            Membership membership = new Membership();
+            membership.Name = model.newName;
+            membership.Price = model.newPrice;
+            membership.Sessions = model.newSessions;
+            membership.MartialArts = model.newMartialArts;
+            membership.IsKids = model.newIsKids;
+
+            _context.Memberships.Add(membership);
+            await _context.SaveChangesAsync();
+        }
+        return View(model);
+    }
+
+    public async Task<IActionResult> MembershipRemove(EditMembershipModel model)
+    {
+        if (model.ChosenMembershipID != null)
+        {
+            Membership m = await _dbGrabber.GetDBMembership((int)model.ChosenMembershipID);
+            if (m != null)
+            {
+                List<User?> allUsers = _dbGrabber.GetAllDbUsers();
+                var usersWithMem = allUsers.Where(u => u.Membership?.MembershipId == m.MembershipId);
+                foreach (User? u in usersWithMem)
+                {
+                    u.Membership = null;
+                }
+                _context.Memberships.Remove(m);
+                
+                await _context.SaveChangesAsync();
+            }
+        }
+        return RedirectToAction("MembershipEdit");
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using DobuMartial_project.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,8 @@ namespace DobuMartial_project.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            var hasher = new PasswordHasher<User>();
+
             base.OnModelCreating(builder);
             List<Day> Days = new List<Day>
             {
@@ -117,6 +120,8 @@ namespace DobuMartial_project.Data
                 new Membership { MembershipId = 4, Name =  "Elite", MartialArts = 100, Sessions = 100, Price = 60.00},
                 new Membership { MembershipId = 5, Name = "Junior Membership", MartialArts = 100, Sessions = 100, Price = 25.00, IsKids = true}
             );
+          
+           
             builder.Entity<Day>().HasData(Days);
             builder.Entity<Class>().HasData(Classes);
             builder.Entity<Session>().HasData(Sessions);
@@ -124,12 +129,19 @@ namespace DobuMartial_project.Data
             builder.Entity<User>().HasMany(e => e.Sessions).WithMany(e => e.Users).UsingEntity<UserSession>();
             builder.Entity<Day>().HasMany(e => e.Sessions).WithOne(e => e.Day).HasForeignKey(e => e.DayID);
             builder.Entity<Class>().HasMany(e => e.Sessions).WithOne(e => e.Class).HasForeignKey(e => e.ClassId);
+
+            builder.Entity<ForumPost>().HasOne(e => e.Owner).WithMany().HasForeignKey(e => e.OwnerId).OnDelete(DeleteBehavior.Restrict);//stop multiple cascading paths;
+            builder.Entity<ForumComment>().HasOne(e => e.User).WithMany().HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ForumComment>().HasOne(e => e.Post).WithMany(e => e.Comments).HasForeignKey(e => e.PostId).OnDelete(DeleteBehavior.Cascade);
+
         }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Day> WeekDays { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ForumPost> ForumPosts { get; set; }
+        public DbSet<ForumComment> ForumComments { get; set; }
         
     }
 }

@@ -37,6 +37,7 @@
     <None Include="wwwroot\assets\img\harpeet.jpg" />
     <None Include="wwwroot\assets\img\sarah.jpg" />
     <None Include="wwwroot\assets\img\photo-1770386717413-78b2d8c33442.jpg" />
+    <None Include="wwwroot\js\post-view.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="bootstrap studio\assets\js\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\assets\css\" />

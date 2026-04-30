@@ -35,5 +35,41 @@ namespace DobuMartial_project.Services
             return await _context.Memberships
                 .FirstOrDefaultAsync(m => m.MembershipId == membershipID);
         }
+
+        public async Task<ForumPost?> GetDBForumPost(int postId)
+        {
+            return await _context.ForumPosts
+                .Include(p => p.Comments)
+                .Include(p => p.Owner)
+                .FirstOrDefaultAsync(p => p.PostId == postId);
+        }
+
+        public async Task<List<ForumPost>> GetAllDBForumPosts()
+        {
+            return await _context.ForumPosts
+                .Include(p => p.Comments)
+                .Include(p => p.Owner)
+                .ToListAsync();
+        }
+
+        public List<Membership?> GetAllDBMemberships()
+        {
+            List<Membership?> memberships = [];
+            foreach (var m in _context.Memberships)
+            {
+                memberships.Add(m);
+            }
+            return memberships;
+        }
+
+        public List<User?> GetAllDbUsers()
+        {
+            List<User?> users=[];
+            foreach (var u in _context.Users)
+            {
+                users.Add(u);
+            }
+            return users;
+        }
     }
 }

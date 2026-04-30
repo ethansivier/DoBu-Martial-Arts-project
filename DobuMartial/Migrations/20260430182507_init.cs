@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DobuMartial_project.Migrations
 {
     /// <inheritdoc />
-    public partial class sessionselectionremoval : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -232,6 +232,27 @@ namespace DobuMartial_project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ForumPost",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostBody = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ForumPost", x => x.PostId);
+                    table.ForeignKey(
+                        name: "FK_ForumPost_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sessions",
                 columns: table => new
                 {
@@ -239,6 +260,7 @@ namespace DobuMartial_project.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TimeStart = table.Column<TimeOnly>(type: "time", nullable: false),
                     TimeEnd = table.Column<TimeOnly>(type: "time", nullable: false),
+                    Selected = table.Column<bool>(type: "bit", nullable: false),
                     DayID = table.Column<int>(type: "int", nullable: false),
                     ClassId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -255,6 +277,33 @@ namespace DobuMartial_project.Migrations
                         column: x => x.DayID,
                         principalTable: "WeekDays",
                         principalColumn: "DayID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ForumComment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ForumComment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ForumComment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ForumComment_ForumPost_PostId",
+                        column: x => x.PostId,
+                        principalTable: "ForumPost",
+                        principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -341,58 +390,58 @@ namespace DobuMartial_project.Migrations
 
             migrationBuilder.InsertData(
                 table: "Sessions",
-                columns: new[] { "SessionId", "ClassId", "DayID", "TimeEnd", "TimeStart" },
+                columns: new[] { "SessionId", "ClassId", "DayID", "Selected", "TimeEnd", "TimeStart" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
-                    { 2, 2, 1, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
-                    { 3, 3, 1, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
-                    { 4, 4, 1, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
-                    { 5, 5, 1, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
-                    { 6, 6, 1, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
-                    { 7, 7, 1, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
-                    { 8, 6, 2, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
-                    { 9, 3, 2, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
-                    { 10, 3, 2, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
-                    { 11, 4, 2, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
-                    { 12, 8, 2, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
-                    { 13, 2, 2, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
-                    { 14, 7, 2, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
-                    { 15, 7, 3, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
-                    { 16, 3, 3, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
-                    { 17, 3, 3, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
-                    { 18, 4, 3, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
-                    { 19, 10, 3, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
-                    { 20, 7, 3, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
-                    { 21, 1, 3, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
-                    { 22, 1, 4, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
-                    { 23, 3, 4, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
-                    { 24, 3, 4, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
-                    { 25, 4, 4, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
-                    { 26, 9, 4, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
-                    { 27, 1, 4, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
-                    { 28, 6, 4, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
-                    { 29, 2, 5, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
-                    { 30, 1, 5, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
-                    { 31, 3, 5, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
-                    { 32, 4, 5, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
-                    { 33, 8, 5, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
-                    { 34, 2, 5, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
-                    { 35, 3, 5, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
-                    { 36, 11, 6, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
-                    { 37, 3, 6, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
-                    { 38, 7, 6, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
-                    { 39, 6, 6, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
-                    { 40, 2, 6, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
-                    { 41, 11, 6, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
-                    { 42, 11, 6, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
-                    { 43, 11, 7, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
-                    { 44, 3, 7, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
-                    { 45, 6, 7, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
-                    { 46, 7, 7, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
-                    { 47, 1, 7, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
-                    { 48, 11, 7, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
-                    { 49, 11, 7, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) }
+                    { 1, 1, 1, false, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
+                    { 2, 2, 1, false, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
+                    { 3, 3, 1, false, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
+                    { 4, 4, 1, false, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
+                    { 5, 5, 1, false, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
+                    { 6, 6, 1, false, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
+                    { 7, 7, 1, false, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
+                    { 8, 6, 2, false, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
+                    { 9, 3, 2, false, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
+                    { 10, 3, 2, false, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
+                    { 11, 4, 2, false, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
+                    { 12, 8, 2, false, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
+                    { 13, 2, 2, false, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
+                    { 14, 7, 2, false, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
+                    { 15, 7, 3, false, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
+                    { 16, 3, 3, false, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
+                    { 17, 3, 3, false, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
+                    { 18, 4, 3, false, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
+                    { 19, 10, 3, false, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
+                    { 20, 7, 3, false, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
+                    { 21, 1, 3, false, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
+                    { 22, 1, 4, false, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
+                    { 23, 3, 4, false, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
+                    { 24, 3, 4, false, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
+                    { 25, 4, 4, false, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
+                    { 26, 9, 4, false, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
+                    { 27, 1, 4, false, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
+                    { 28, 6, 4, false, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
+                    { 29, 2, 5, false, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
+                    { 30, 1, 5, false, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
+                    { 31, 3, 5, false, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
+                    { 32, 4, 5, false, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
+                    { 33, 8, 5, false, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
+                    { 34, 2, 5, false, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
+                    { 35, 3, 5, false, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
+                    { 36, 11, 6, false, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
+                    { 37, 3, 6, false, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
+                    { 38, 7, 6, false, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
+                    { 39, 6, 6, false, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
+                    { 40, 2, 6, false, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
+                    { 41, 11, 6, false, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
+                    { 42, 11, 6, false, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) },
+                    { 43, 11, 7, false, new TimeOnly(7, 30, 0), new TimeOnly(6, 30, 0) },
+                    { 44, 3, 7, false, new TimeOnly(10, 0, 0), new TimeOnly(8, 0, 0) },
+                    { 45, 6, 7, false, new TimeOnly(12, 0, 0), new TimeOnly(10, 30, 0) },
+                    { 46, 7, 7, false, new TimeOnly(14, 30, 0), new TimeOnly(13, 0, 0) },
+                    { 47, 1, 7, false, new TimeOnly(17, 0, 0), new TimeOnly(15, 0, 0) },
+                    { 48, 11, 7, false, new TimeOnly(19, 0, 0), new TimeOnly(17, 30, 0) },
+                    { 49, 11, 7, false, new TimeOnly(21, 0, 0), new TimeOnly(19, 0, 0) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -445,6 +494,21 @@ namespace DobuMartial_project.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ForumComment_PostId",
+                table: "ForumComment",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ForumComment_UserId",
+                table: "ForumComment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ForumPost_OwnerId",
+                table: "ForumPost",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sessions_ClassId",
                 table: "Sessions",
                 column: "ClassId");
@@ -479,6 +543,9 @@ namespace DobuMartial_project.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ForumComment");
+
+            migrationBuilder.DropTable(
                 name: "Instructors");
 
             migrationBuilder.DropTable(
@@ -486,6 +553,9 @@ namespace DobuMartial_project.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "ForumPost");
 
             migrationBuilder.DropTable(
                 name: "Sessions");

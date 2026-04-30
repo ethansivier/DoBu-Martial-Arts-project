@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DobuMartial_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260429211217_sessionselectionreaddition")]
-    partial class sessionselectionreaddition
+    [Migration("20260430191129_PostTime")]
+    partial class PostTime
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -184,6 +184,67 @@ namespace DobuMartial_project.Migrations
                             DayID = 7,
                             Name = "Sunday"
                         });
+                });
+
+            modelBuilder.Entity("DobuMartial_project.Models.ForumComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ForumComment");
+                });
+
+            modelBuilder.Entity("DobuMartial_project.Models.ForumPost", b =>
+                {
+                    b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"));
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PostBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PostDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PostTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PostId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("ForumPosts");
                 });
 
             modelBuilder.Entity("DobuMartial_project.Models.Instructor", b =>
@@ -1034,6 +1095,36 @@ namespace DobuMartial_project.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("DobuMartial_project.Models.ForumComment", b =>
+                {
+                    b.HasOne("DobuMartial_project.Models.ForumPost", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DobuMartial_project.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DobuMartial_project.Models.ForumPost", b =>
+                {
+                    b.HasOne("DobuMartial_project.Models.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("DobuMartial_project.Models.Session", b =>
                 {
                     b.HasOne("DobuMartial_project.Models.Class", "Class")
@@ -1134,6 +1225,11 @@ namespace DobuMartial_project.Migrations
             modelBuilder.Entity("DobuMartial_project.Models.Day", b =>
                 {
                     b.Navigation("Sessions");
+                });
+
+            modelBuilder.Entity("DobuMartial_project.Models.ForumPost", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("DobuMartial_project.Models.User", b =>

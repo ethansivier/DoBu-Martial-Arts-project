@@ -72,7 +72,6 @@ namespace DobuMartial_project.Controllers
             return RedirectToAction("PostView", "Forum", new {postID = postId});
         }
 
-        // not working, post is not recieved, everyone also can access editing rn should be locked behind either admin or post owner
         public async Task EditComment(int commentId, string newText, int postId)
         {
             ForumPost? post = await _dbGrabber.GetDBForumPost(postId);

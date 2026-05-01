@@ -43,8 +43,8 @@
             <h5 class="fw-bold mb-3">Comments @post.Comments.Count.ToString()</h5>
             @foreach (ForumComment comment in post.Comments)
             {
-                <div class="card border-0 shadow-sm mb-3" data-comment-id="@comment.Id" data-post-id="@post.PostId">
-                    <div class="card-body p-4">
+                <div class="card border-0 shadow-sm mb-3" >
+                    <div class="card-body p-4" id="commentCard" data-comment-id="@comment.Id" data-post-id="@post.PostId">
                         <div class="position-absolute top-0 end-0 me-2 mt-2 dropdown">
                             <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg class="bi bi-three-dots-vertical fs-5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">

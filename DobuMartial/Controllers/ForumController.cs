@@ -3,6 +3,7 @@ using DobuMartial_project.Models;
 using DobuMartial_project.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 
 namespace DobuMartial_project.Controllers
 {
@@ -23,7 +24,7 @@ namespace DobuMartial_project.Controllers
             TempData["Error"] = error;
             return RedirectToAction(action, controller, fragment);
         }
-        public async Task<IActionResult> Index(ForumModel model) 
+        public async Task<IActionResult> Index(ForumModel model)
         {
             model.Posts = await _dbGrabber.GetAllDBForumPosts();
             return View(model);
@@ -42,8 +43,8 @@ namespace DobuMartial_project.Controllers
 
             post.Owner = dbUser;
 
-            _context.ForumPosts.Add(post); 
-            
+            _context.ForumPosts.Add(post);
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -69,7 +70,17 @@ namespace DobuMartial_project.Controllers
             comment.UserId = idUser.Id;
             model.Post.Comments.Add(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction("PostView", "Forum", new {postID = postId});
+            return RedirectToAction("PostView", "Forum", new { postID = postId });
+        }
+
+        public async Task<IActionResult> PostRemove(int postId)
+        {
+            ForumPost? post = await _dbGrabber.GetDBForumPost(postId);
+            if (post == null) { return ErrorRedirect("Could not find the post", "Index", "Forum"); }
+            _context.ForumPosts.Remove(post);
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Successfully removed post.";
+            return RedirectToAction("Index", "Forum");
         }
 
         public async Task EditComment(int commentId, string newText, int postId)
@@ -81,6 +92,17 @@ namespace DobuMartial_project.Controllers
             comment.Comment = newText;
             await _context.SaveChangesAsync();
 
+        }
+
+        public async Task<IActionResult> RemoveComment(int commentId, int postId)
+        {
+            ForumPost? post = await _dbGrabber.GetDBForumPost(postId);
+            if (post == null) { return ErrorRedirect("Could not successfully find the post", "Index", "Forum"); }
+            ForumComment? comment = post.Comments.FirstOrDefault(c => c.Id == commentId);
+            if (comment == null) { return ErrorRedirect("Could not successfully find the comment", "Index", "Forum"); }
+            post.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("PostView", "Forum", new { postID = postId });
         }
     }
 }

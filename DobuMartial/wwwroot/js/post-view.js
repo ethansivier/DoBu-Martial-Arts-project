@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (postBody && readMoreBtn) {
         const fullText = postBody.textContent;
-        const limit = 1;
+        const limit = 50;
 
         if (fullText.length > limit) {
             const truncatedText = fullText.substring(0, limit) + '...';

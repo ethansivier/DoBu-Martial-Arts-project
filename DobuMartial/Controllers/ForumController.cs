@@ -3,6 +3,7 @@ using DobuMartial_project.Models;
 using DobuMartial_project.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Configuration;
 
 namespace DobuMartial_project.Controllers
@@ -54,6 +55,15 @@ namespace DobuMartial_project.Controllers
             model.Post = await _dbGrabber.GetDBForumPost(postId);
             if (model.Post == null) { return ErrorRedirect("Could not find the post in our database", "Index", "Forum"); }
 
+            User? idUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (idUser != null) 
+            {
+                User? dbUser = await _dbGrabber.GetDBUser(idUser);
+                if (dbUser != null) 
+                {
+                    model.UserId = idUser.Id;
+                }
+            }
 
             return View(model);
         }

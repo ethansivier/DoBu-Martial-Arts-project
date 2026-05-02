@@ -151,6 +151,10 @@ namespace DobuMartial_project.Controllers
                     $"you can currently only book classes for {string.Join(",", dbUser.ChosenMartialArts.Select(c => c.Name))}", 
                     EndRedirect.ActionName, EndRedirect.ControllerName, EndRedirect.Fragment);
             }
+            if(dbUser.Sessions.Any(s => s.SessionId == sessionid))
+            {
+                return ErrorRedirect($"You already are signed up for this session.", EndRedirect.ActionName, EndRedirect.ControllerName, EndRedirect.Fragment);
+            }
 
             TempData["Success"] = $"Successfully added {dbSession?.Class.Name} on {dbSession?.Day.Name.ToString()} at {dbSession?.TimeStart.ToString()} to your booking ";
             dbUser.Sessions.Add(dbSession);
